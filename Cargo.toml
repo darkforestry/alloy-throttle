@@ -1,0 +1,15 @@
+[package]
+name = "alloy-throttle"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+alloy-json-rpc = "0.5.4"
+alloy-transport = "0.5.4"
+governor = "0.7.0"
+tower = "0.5.1"
+thiserror = "1.0.66"
+
+
+[dev-dependencies]
+tokio = { version = "1.38", default-features = false }
