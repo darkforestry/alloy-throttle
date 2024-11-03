@@ -12,4 +12,9 @@ thiserror = "1.0.66"
 
 
 [dev-dependencies]
-tokio = { version = "1.38", default-features = false }
+tokio = { version = "1.38", default-features = false, features = [
+    "rt-multi-thread",
+    "macros",
+] }
+alloy = { version = "0.5", features = ["provider-ws"] }
+eyre = "0.6.12"
