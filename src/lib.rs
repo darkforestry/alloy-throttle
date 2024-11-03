@@ -7,9 +7,9 @@ use std::{
 use alloy_json_rpc::{RequestPacket, ResponsePacket};
 use alloy_transport::{TransportError, TransportFut};
 use governor::{
-    clock::{self, Clock, QuantaClock, QuantaInstant},
-    middleware::{NoOpMiddleware, RateLimitingMiddleware},
-    state::{InMemoryState, NotKeyed, StateStore},
+    clock::{QuantaClock, QuantaInstant},
+    middleware::NoOpMiddleware,
+    state::{InMemoryState, NotKeyed},
     Jitter, Quota, RateLimiter,
 };
 
@@ -81,7 +81,7 @@ where
 
     fn call(&mut self, request: RequestPacket) -> Self::Future {
         let throttle = self.throttle.clone();
-        let jitter = self.jitter.clone();
+        let jitter = self.jitter;
         let mut inner = self.inner.clone();
 
         Box::pin(async move {
