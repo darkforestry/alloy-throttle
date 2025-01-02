@@ -1,20 +1,20 @@
 [package]
 name = "alloy-throttle"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 
 [dependencies]
-alloy-json-rpc = "0.5.4"
-alloy-transport = "0.5.4"
-governor = "0.7.0"
-tower = "0.5.1"
-thiserror = "1.0.66"
+alloy-json-rpc = "0.9"
+alloy-transport = "0.9"
+governor = "0.8"
+tower = "0.5"
+thiserror = "2"
 
 
 [dev-dependencies]
-tokio = { version = "1.38", default-features = false, features = [
+tokio = { version = "1.42", default-features = false, features = [
     "rt-multi-thread",
     "macros",
 ] }
-alloy = { version = "0.5", features = ["provider-ws"] }
-eyre = "0.6.12"
+alloy = { version = "0.9", features = ["provider-ws"] }
+eyre = "0.6"
