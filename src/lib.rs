@@ -1,5 +1,5 @@
 use std::{
-    num::NonZeroU32,
+    num::{NonZero, NonZeroU32},
     sync::Arc,
     task::{Context, Poll},
 };
@@ -35,6 +35,11 @@ impl ThrottleLayer {
         let quota = NonZeroU32::new(requests_per_second)
             .ok_or(ThrottleError::InvalidRequestsPerSecond)
             .map(Quota::per_second)?;
+
+        Quota::per_second(
+            NonZeroU32::new(requests_per_second)
+                .expect("Requests per second must be a non-zero positive integer"),
+        );
 
         let throttle = Arc::new(RateLimiter::direct(quota));
 

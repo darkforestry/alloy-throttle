@@ -1,5 +1,5 @@
 use alloy::{
-    network::primitives::BlockTransactionsKind,
+    eips::BlockId,
     providers::{Provider, ProviderBuilder},
     rpc::client::ClientBuilder,
 };
@@ -9,6 +9,7 @@ use alloy_transport::layers::RetryBackoffLayer;
 #[tokio::main]
 async fn main() -> eyre::Result<()> {
     let rpc_endpoint = std::env::var("ETHEREUM_PROVIDER")?;
+
     let client = ClientBuilder::default()
         .layer(ThrottleLayer::new(40, None)?)
         // The RetryBackoffLayer can be stacked with the throttle layer to retry failed requests
@@ -18,10 +19,8 @@ async fn main() -> eyre::Result<()> {
     let provider = ProviderBuilder::new().on_client(client);
 
     let block_number = provider.get_block_number().await?;
-    for i in block_number - 100..block_number {
-        let block = provider
-            .get_block(i.into(), BlockTransactionsKind::Hashes)
-            .await?;
+    for _ in block_number - 100..block_number {
+        let block = provider.get_block(BlockId::latest()).await?;
 
         if let Some(block) = block {
             println!("Tx count: {:?}", block.transactions.len());
